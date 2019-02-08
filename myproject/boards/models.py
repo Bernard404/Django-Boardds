@@ -22,7 +22,8 @@ class Topic(models.Model):
     subject = models.CharField(max_length=255)
     last_updated = models.DateTimeField(auto_now_add=True)
     board = models.ForeignKey(Board,on_delete=models.CASCADE, related_name='topics')
-    starter = models.ForeignKey(User,on_delete=models.CASCADE,related_name='topics')
+    starter = models.ForeignKey(User,on_delete=models.CASCADE, related_name='topics')
+    views = models.PositiveIntegerField(default=0)  # <- here
 
     def __str__(self):
         return self.subject
