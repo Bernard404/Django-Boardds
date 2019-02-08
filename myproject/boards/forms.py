@@ -2,9 +2,9 @@ from django import forms
 from .models import Topic, Post
 
 class PostForm(forms.ModelForm):
-        class Meta:
-            model = Post
-            fields = ['message', ]
+    class Meta:
+        model = Post
+        fields = ['message']
 
 class NewTopicForm(forms.ModelForm):
     message = forms.CharField(
