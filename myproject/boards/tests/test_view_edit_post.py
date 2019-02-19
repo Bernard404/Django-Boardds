@@ -1,9 +1,16 @@
 from django.forms import ModelForm
+
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.urls import reverse, resolve
-from ..models import Board, Post, Topic
+from django.urls import resolve, reverse
+
+
+
+from ..models import Board
+from ..models import Post
+from ..models import Topic
 from ..views import PostUpdateView
+
 
 class PostUpdateViewTestCase(TestCase):
     '''
@@ -22,6 +29,7 @@ class PostUpdateViewTestCase(TestCase):
             'post_pk': self.post.pk
         })
 
+
 class LoginRequiredPostUpdateViewTests(PostUpdateViewTestCase):
     def test_redirection(self):
         '''
@@ -30,6 +38,7 @@ class LoginRequiredPostUpdateViewTests(PostUpdateViewTestCase):
         login_url = reverse('login')
         response = self.client.get(self.url)
         self.assertRedirects(response, '{login_url}?next={url}'.format(login_url=login_url, url=self.url))
+
 
 class UnauthorizedPostUpdateViewTests(PostUpdateViewTestCase):
     def setUp(self):
@@ -78,6 +87,7 @@ class PostUpdateViewTests(PostUpdateViewTestCase):
         self.assertContains(self.response, '<input', 1)
         self.assertContains(self.response, '<textarea', 1)
 
+
 class SuccessfulPostUpdateViewTests(PostUpdateViewTestCase):
     def setUp(self):
         super().setUp()
@@ -94,6 +104,7 @@ class SuccessfulPostUpdateViewTests(PostUpdateViewTestCase):
     def test_post_changed(self):
         self.post.refresh_from_db()
         self.assertEquals(self.post.message, 'edited message')
+
 
 class InvalidPostUpdateViewTests(PostUpdateViewTestCase):
     def setUp(self):
